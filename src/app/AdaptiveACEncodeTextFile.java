@@ -12,8 +12,11 @@ import io.OutputStreamBitSink;
 public class AdaptiveACEncodeTextFile {
 
 	public static void main(String[] args) throws IOException {
-		String input_file_name = "data/uncompressed.txt";
-		String output_file_name = "data/adaptive-compressed.dat";
+		//String input_file_name = "data/uncompressed.txt";
+		//String output_file_name = "data/adaptive-compressed.dat";
+		
+		String input_file_name = "data/out.dat";
+		String output_file_name = "data/adaptive-compressed-out.dat";
 
 		int range_bit_width = 40;
 

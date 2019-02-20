@@ -12,8 +12,11 @@ import io.InsufficientBitsLeftException;
 public class ContextAdaptiveACDecodeTextFile {
 
 	public static void main(String[] args) throws InsufficientBitsLeftException, IOException {
-		String input_file_name = "data/context-adaptive-compressed.dat";
-		String output_file_name = "data/reuncompressed.txt";
+		//String input_file_name = "data/context-adaptive-compressed.dat";
+		//String output_file_name = "data/reuncompressed.txt";
+		
+		String input_file_name = "data/context-adaptive-compressed-out.dat";
+		String output_file_name = "data/context-adaptive-reuncompressed-out.txt";
 
 		FileInputStream fis = new FileInputStream(input_file_name);
 

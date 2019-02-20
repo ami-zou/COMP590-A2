@@ -12,8 +12,11 @@ import io.InsufficientBitsLeftException;
 public class StaticACDecodeTextFile {
 
 	public static void main(String[] args) throws InsufficientBitsLeftException, IOException {
-		String input_file_name = "data/static-compressed.dat";
-		String output_file_name = "data/reuncompressed.txt";
+		//String input_file_name = "data/static-compressed.dat";
+		//String output_file_name = "data/reuncompressed.txt";
+		
+		String input_file_name = "data/static-compressed-out.dat";
+		String output_file_name = "data/static-reuncompressed-out.txt";
 
 		FileInputStream fis = new FileInputStream(input_file_name);
 
