@@ -1,6 +1,6 @@
 # COMP590Spring2019-ArithmeticCoder
 
-Arithmetic coder example from class
+Arithmetic coder example from class: https://github.com/kmayerpatel/COMP590Spring2019-ArithmeticCoder 
 
 The text file encoder produces a file with the following format:
 
@@ -15,3 +15,6 @@ it's encoded the last symbol), it needs to have the encoder emit a bit pattern t
 so that the decoder doesn't run out of bits as it fills its input buffer when it gets to the end. The method emitMiddle() in
 the encoder does this by writing out a 1 followed by range_bit_width-1 0's since that represents the middle of value of the whole range which is guaranteed to be between high and low.
 
+# COMP590-A2
+
+Uses the provided Arithmetic coder with my own schemes (check `A2 - Ami Zou.pdf` for details) to compress a raw video file.
