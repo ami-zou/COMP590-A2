@@ -67,13 +67,15 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 			
 			encoder.encode(next_pixel, model, bit_sink);
 			
-			//System.out.println("Save the 1st frame " + i + ": " + next_pixel);
+			System.out.println("Save the 1st frame " + i + ": " + next_pixel);
 		}
 
 		for (int i=4096; i<num_pixels; i++) {
 			int next_pixel = fis.read();
 			int absoluteIndex = i % 4096;
 			model = models[absoluteIndex];
+			
+			System.out.println("The current pixel is " + next_pixel);
 			
 			// Encoding and updating the difference
 			Integer difference = next_pixel - lastFrame[absoluteIndex];

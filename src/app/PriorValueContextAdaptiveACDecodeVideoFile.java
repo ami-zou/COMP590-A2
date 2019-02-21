@@ -55,13 +55,18 @@ public class PriorValueContextAdaptiveACDecodeVideoFile {
 		
 		// Get the first 4096 pixels as the base current_frame
 		for (int i=0; i<4096; i++) {
-			int next_pixel = decoder.decode(model, bit_source);
+			model = models[i];
+			
+			int next_pixel = decoder.decode(model, bit_source); //bit_source.next(8); 
+			
 			System.out.println("Decoded 1st frame pixel " + i +" with value" + next_pixel);
+			
 			fos.write(next_pixel);
 			
 			lastFrame[i] = next_pixel;
-			model = models[i];
-			
+			//model.updateCount(next_pixel);
+			//TODO: MOVED MODEL
+			//model = models[i];
 			//encoder.encode(next_pixel, model, bit_sink);
 			
 			//System.out.println("Save the 1st frame " + i + ": " + next_pixel);
