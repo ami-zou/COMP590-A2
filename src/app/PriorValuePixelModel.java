@@ -37,17 +37,20 @@ public class PriorValuePixelModel implements SourceModel<Integer> {
 	}
 	
 	public void updateCount(int index) {
-		_counts[index]++;
+		_counts[index + 255 ]++;
+		//_counts[index  ]++;
 		_total_count++;
 	}
 
 	@Override
 	public int size() {
+		//System.out.println("size() is " + _differences.length);
 		return _differences.length;
 	}
 
 	@Override
-	public Integer get(int index) {
+	public Integer get(int diff) {
+		int index = diff ;
 		assert index >= 0 && index < size();
 		
 		return _differences[index];
@@ -65,14 +68,16 @@ public class PriorValuePixelModel implements SourceModel<Integer> {
 		
 		return (1.0 * cumulative_count) / (1.0 * _total_count);
 	}
-	
+
+/*
 	public int lookup(Integer diff) {
 		for (int i=0; i<size(); i++) {
-			if (get(i).equals(diff+255)) {
+			//System.out.println("i is " + i + " and get(i) is " + get(i) + " is equal to " + diff + " ?");
+			if (get(i).equals(diff)) {
 				return i;
 			}
 		}
 		throw new RuntimeException("Symbol not in source model");
 	}
-
+*/
 }

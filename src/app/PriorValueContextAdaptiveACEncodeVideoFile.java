@@ -22,10 +22,11 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 
 		int num_pixels = (int) new File(input_file_name).length();
 				
-		Integer[] differences = new Integer[512]; //Possible values: from -255 to +255
-		for (int i=-255; i<=255; i++) {
-			differences[i+255] = i;
-			//System.out.println("differences[i] " + (i+255) + " is " + i);
+		Integer[] differences = new Integer[511]; //Possible values: from -255 to +255
+		for (int i=0; i<differences.length; i++) {
+			//int index = i+255;
+			differences[i] = i-255;
+			//System.out.println("differences[i] " + i + " is " + (i-255));
 		}
 
 		// Create 64 * 64 = 4096 models for each pixel position in one frame. 
@@ -64,7 +65,9 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 			lastFrame[i] = next_pixel;
 			model = models[i];
 			
-			encoder.encode(next_pixel+255, model, bit_sink);
+			encoder.encode(next_pixel, model, bit_sink);
+			
+			//System.out.println("Save the 1st frame " + i + ": " + next_pixel);
 		}
 
 		for (int i=4096; i<num_pixels; i++) {
@@ -74,7 +77,8 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 			
 			// Encoding and updating the difference
 			Integer difference = next_pixel - lastFrame[absoluteIndex];
-			difference += 255; //For handling negative numbers
+			//System.out.println("The current pixel difference is " + difference);
+			//difference += 255; //For handling negative numbers
 			encoder.encode(difference, model, bit_sink);
 			
 			// Update model used
