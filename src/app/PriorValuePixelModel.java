@@ -16,7 +16,9 @@ public class PriorValuePixelModel implements SourceModel<Integer> {
 		} else {
 			counts = new int[differences.length];			
 			for (int i=0; i<counts.length; i++) {
-				counts[i] = 1; //TODO: or 0 here?
+				counts[i] = 1; //TODO: or 0 here? Answer: No if using the existing ACEncoding, 
+				//because we need some base value to start calculating the CDFs
+				//However, if we use an escaper, 0 is allowed
 			}
 			//System.out.println("Created a model with counts length " + counts.length);
 		}
@@ -38,13 +40,11 @@ public class PriorValuePixelModel implements SourceModel<Integer> {
 	
 	public void updateCount(int index) {
 		_counts[index + 255 ]++;
-		//_counts[index  ]++;
 		_total_count++;
 	}
 
 	@Override
 	public int size() {
-		//System.out.println("size() is " + _differences.length);
 		return _differences.length;
 	}
 
@@ -68,16 +68,4 @@ public class PriorValuePixelModel implements SourceModel<Integer> {
 		
 		return (1.0 * cumulative_count) / (1.0 * _total_count);
 	}
-
-/*
-	public int lookup(Integer diff) {
-		for (int i=0; i<size(); i++) {
-			//System.out.println("i is " + i + " and get(i) is " + get(i) + " is equal to " + diff + " ?");
-			if (get(i).equals(diff)) {
-				return i;
-			}
-		}
-		throw new RuntimeException("Symbol not in source model");
-	}
-*/
 }

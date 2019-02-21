@@ -27,16 +27,15 @@ public class PriorValueContextAdaptiveACDecodeVideoFile {
 		
 		for (int i=0; i<4096; i++) {
 			// Create new model with default count of 1 for all symbols
-			// TODO: another way???
 			models[i] = new PriorValuePixelModel(differences);
 		}
 		
 		// Read in number of symbols encoded
-
+		
 		int num_pixels = bit_source.next(32);
 
 		// Read in range bit width and setup the decoder
-
+		
 		int range_bit_width = bit_source.next(8);
 		ArithmeticDecoder<Integer> decoder = new ArithmeticDecoder<Integer>(range_bit_width);
 
@@ -57,45 +56,33 @@ public class PriorValueContextAdaptiveACDecodeVideoFile {
 		for (int i=0; i<4096; i++) {
 			model = models[i];
 			
-			int next_pixel = decoder.decode(model, bit_source); //bit_source.next(8); 
+			int next_pixel = decoder.decode(model, bit_source); 
 			
 			System.out.println("Decoded 1st frame pixel " + i +" with value" + next_pixel);
 			
 			fos.write(next_pixel);
 			
 			lastFrame[i] = next_pixel;
-			//model.updateCount(next_pixel);
-			//TODO: MOVED MODEL
-			//model = models[i];
-			//encoder.encode(next_pixel, model, bit_sink);
-			
-			//System.out.println("Save the 1st frame " + i + ": " + next_pixel);
 		}
 
 		for (int i=4096; i<num_pixels; i++) {
+			// Get the position and the model
 			int absoluteIndex = i % 4096;
 			model = models[absoluteIndex];
 			
 			int next_diff = decoder.decode(model, bit_source);
 						
-			// Decoding - getting the actual pixel value + and updating the difference
+			// Decoding: get the actual pixel value
 			Integer pixel = next_diff + lastFrame[absoluteIndex];
 			
 			fos.write(pixel);
 			System.out.println("Decoded following pixel: " + i +" with value " + pixel);
-			//System.out.println("The current pixel difference is " + difference);
-			//difference += 255; //For handling negative numbers
-			//encoder.encode(difference, model, bit_sink);
 			
 			// Update model used
-			model.updateCount(next_diff); //TODO: pixel or next_diff here?
+			model.updateCount(next_diff);
 			
 			// Update current frame
 			lastFrame[absoluteIndex] = pixel;
-			
-			// Set up next model based on symbol just encoded
-			// model = models[next_pixel];
-			
 		}
 
 		System.out.println("Done.");

@@ -24,7 +24,6 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 				
 		Integer[] differences = new Integer[511]; //Possible values: from -255 to +255
 		for (int i=0; i<differences.length; i++) {
-			//int index = i+255;
 			differences[i] = i-255;
 			//System.out.println("differences[i] " + i + " is " + (i-255));
 		}
@@ -36,7 +35,6 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 		
 		for (int i=0; i<4096; i++) {
 			// Create new model with default count of 1 for all symbols
-			// TODO: another way???
 			models[i] = new PriorValuePixelModel(differences);
 		}
 
@@ -79,8 +77,6 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 			
 			// Encoding and updating the difference
 			Integer difference = next_pixel - lastFrame[absoluteIndex];
-			//System.out.println("The current pixel difference is " + difference);
-			//difference += 255; //For handling negative numbers
 			encoder.encode(difference, model, bit_sink);
 			
 			// Update model used
@@ -88,10 +84,6 @@ public class PriorValueContextAdaptiveACEncodeVideoFile {
 			
 			// Update current frame
 			lastFrame[absoluteIndex] = next_pixel;
-			
-			// Set up next model based on symbol just encoded
-			// model = models[next_pixel];
-			
 		}
 		
 		
